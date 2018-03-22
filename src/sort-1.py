@@ -13,3 +13,8 @@ def quicksort(arr):
     greater = quicksort([x for x in arr if x > arr[0]])
 
     return lesser + pivots + greater
+
+arr = [2,4,3,2,1,5,6]
+
+arr = quicksort(arr)
+print(arr)
