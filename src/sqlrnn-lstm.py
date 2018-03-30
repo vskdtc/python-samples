@@ -152,6 +152,18 @@ model.fit([encoder_input_data, decoder_input_data], decoder_target_data,
 # Save model
 model.save('s2s.h5')
 
+# serialize model to JSON
+model_json = model.to_json()
+with open("s2smodel.json", "w") as json_file:
+    json_file.write(model_json)
+# serialize weights to HDF5
+model.save_weights("s2smodel.h5")
+print("Saved model to disk")
+
+#kv = h5py.File('/Users/vskdtc/IdeaProjects/mysql-python/src/s2s.h5', 'r')
+#kv.keys()
+
+
 # Next: inference mode (sampling).
 # Here's the drill:
 # 1) encode input and retrieve initial decoder state
