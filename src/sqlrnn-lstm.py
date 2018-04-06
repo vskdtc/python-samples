@@ -1,14 +1,7 @@
 '''Sequence to sequence example in Keras (character-level).
-This script demonstrates how to implement a basic character-level
-sequence-to-sequence model. We apply it to translating
-short English sentences into short French sentences,
-character-by-character. Note that it is fairly unusual to
-do character-level machine translation, as word-level
-models are more common in this domain.
 # Summary of the algorithm
 - We start with input sequences from a domain (e.g. English sentences)
-    and correspding target sequences from another domain
-    (e.g. French sentences).
+    and correspding target sequences from another domain.
 - An encoder LSTM turns input sequences to 2 state vectors
     (we keep the last LSTM state and discard the outputs).
 - A decoder LSTM is trained to turn the target sequences into
@@ -28,17 +21,7 @@ models are more common in this domain.
     - Append the sampled character to the target sequence
     - Repeat until we generate the end-of-sequence character or we
         hit the character limit.
-# Data download
-English to French sentence pairs.
-http://www.manythings.org/anki/fra-eng.zip
-Lots of neat sentence pairs datasets can be found at:
-http://www.manythings.org/anki/
-# References
-- Sequence to Sequence Learning with Neural Networks
-    https://arxiv.org/abs/1409.3215
-- Learning Phrase Representations using
-    RNN Encoder-Decoder for Statistical Machine Translation
-    https://arxiv.org/abs/1406.1078
+
 '''
 from __future__ import print_function
 
@@ -48,12 +31,12 @@ import numpy as np
 import h5py
 import random
 
-batch_size = 64  # Batch size for training.
+batch_size = 96  # Batch size for training.
 epochs = 1000  # Number of epochs to train for.
-latent_dim = 32  # Latent dimensionality of the encoding space.
+latent_dim = 128  # Latent dimensionality of the encoding space.
 num_samples = 1000000  # Number of samples to train on.
 # Path to the data txt file on disk.
-data_path = '/Users/vskdtc/IdeaProjects/mysql-python/src/sql.txt'
+data_path = '/Users/vskdtc/IdeaProjects/mysql-python/src/sql1.txt'
 
 # Vectorize the data.
 input_texts = []
@@ -63,6 +46,7 @@ target_characters = set()
 lcnt = 0
 with open(data_path, 'r', encoding='utf-8') as f:
     lines = f.read().split('\n')
+    print('Number of lines:', lines)
 for line in lines[: min(num_samples, len(lines) - 1)]:
     #print(line.split('^'))
     input_text, target_text = line.split('^')
@@ -107,7 +91,7 @@ decoder_target_data = np.zeros(
     dtype='float32')
 
 all_data = list(zip(input_texts, target_texts))
-random.shuffle(all_data[:75])
+random.shuffle(all_data[:3000])
 print(all_data)
 print("=="*20)
 for i, (input_text, target_text) in enumerate(all_data):
@@ -152,17 +136,20 @@ model.fit([encoder_input_data, decoder_input_data], decoder_target_data,
 # Save model
 model.save('s2s.h5')
 
+#------------------------------
+#experiments
+
 # serialize model to JSON
-model_json = model.to_json()
-with open("s2smodel.json", "w") as json_file:
-    json_file.write(model_json)
+#model_json = model.to_json()
+#with open("s2smodel.json", "w") as json_file:
+#    json_file.write(model_json)
 # serialize weights to HDF5
-model.save_weights("s2smodel.h5")
-print("Saved model to disk")
+#model.save_weights("s2smodel.h5")
+#print("Saved model to disk")
 
 #kv = h5py.File('/Users/vskdtc/IdeaProjects/mysql-python/src/s2s.h5', 'r')
 #kv.keys()
-
+#------------------------------
 
 # Next: inference mode (sampling).
 # Here's the drill:
@@ -208,8 +195,7 @@ def decode_sequence(input_seq):
     stop_condition = False
     decoded_sentence = ''
     while not stop_condition:
-        output_tokens, h, c = decoder_model.predict(
-            [target_seq] + states_value)
+        output_tokens, h, c = decoder_model.predict([target_seq] + states_value)
 
         # Sample a token
         sampled_token_index = np.argmax(output_tokens[0, -1, :])
@@ -231,8 +217,9 @@ def decode_sequence(input_seq):
 
     return decoded_sentence
 
+print('LINES TEST:  ', len(input_texts))
 
-for seq_index in range(39):
+for seq_index in range(35):
     # Take one sequence (part of the training set)
     # for trying out decoding.
     input_seq = encoder_input_data[seq_index: seq_index + 1]
@@ -241,15 +228,17 @@ for seq_index in range(39):
     print(seq_index)
     print('Input sentence:', input_texts[seq_index])
     print('Decoded sentence:', decoded_sentence)
-print('testing')
+print('testing model')
+print('=============')
 encoder_test_data = np.zeros(
     (2,max_encoder_seq_length, num_encoder_tokens),
     dtype='float32')
-test_seq = "fetch total employee data"
+test_seq = "Store city and company for me"
 print(test_seq)
 #encoder_test_data 
 for t, char in enumerate(test_seq):
         encoder_test_data[1,t, input_token_index[char]] = 1.
 #input_seq = 'fetch all customer data'
 decoded_sentence = decode_sequence(encoder_test_data[1:2])
+print(decoded_sentence)
 print('Decoded test sentence:', decoded_sentence)

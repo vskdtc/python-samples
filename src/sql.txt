@@ -1,3 +1,7 @@
+city and company^ok (CREATE TABLE `DB3`.`MYENTRY` (`city` VARCHAR(255) NULL DEFAULT NULL,`company` VARCHAR(255) NULL DEFAULT NULL))
+What time is it^SELECT NOW()
+THANK YOU^YOU ARE WELCOME
+Store some data for me^What data I shall store
 display all employee info^SELECT * FROM EMPLOYEE
 fetch all customer data^SELECT * FROM CUSTOMER
 find all customer data^SELECT * FROM CUSTOMER
@@ -9,3 +13,4 @@ select all customer data^SELECT * FROM CUSTOMER
 obtain all employee info^SELECT * FROM EMPLOYEE
 show all employee info^SELECT * FROM EMPLOYEE
 display all employee info^SELECT * FROM EMPLOYEE
+What tables are in the database^SHOW TABLES

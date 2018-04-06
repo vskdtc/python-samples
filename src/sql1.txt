@@ -1,0 +1,36 @@
+What time is it^SELECT GET_TIME
+THANK YOU^YOU ARE WELCOME
+Store city and company for me^CREATE [TABLE:MYENTRY], [COLUMN1:city:string], [COLUMN2:company:string], [DEFAULT:NULL]
+display all employee info^SELECT * FROM EMPLOYEE
+fetch all customer data^SELECT customer FROM CUSTOMER
+Store city and company for me^CREATE [TABLE:MYENTRY], [COLUMN1:city:string], [COLUMN2:company:string], [DEFAULT:NULL]
+What tables are in the database^SHOW TABLES
+display all employee info^SELECT * FROM EMPLOYEE
+How many open cases have been open for at least 30 days?^SELECT leads FROM SALES WHERE max(data)-min(data)=30
+retrieve all customer data^SELECT customere FROM CUSTOMER
+What tables are in the database^SHOW TABLES
+show all employee info^SELECT employee FROM EMPLOYEE
+Show them by forecast category 7^SELECT leads FROM SALES WHERE max(data)-min(data)=30 GROUP BY forecats_category
+How many tasks does it take before we convert a lead to an opportunity?^SELECT phase FROM SALES WHERE status=5
+Store city and company for me^CREATE [TABLE:MYENTRY], [COLUMN1:city:string], [COLUMN2:company:string], [DEFAULT:NULL]
+find all customer data^SELECT customer FROM CUSTOMER
+What percent of our leads convert to sales?^SELECT SUM(DISTINCT(leads)/100 FROM SALES WHERE status=1
+What tables are in the database^SHOW TABLES
+display all employee info^SELECT * FROM EMPLOYEE
+Show me leads by status for unconverted leads?^SELECT leads FROM SALES WHERE status=0
+Store city and company for me^CREATE [TABLE:MYENTRY], [COLUMN1:city:string], [COLUMN2:company:string], [DEFAULT:NULL]
+What is our pipeline by sales rep?^SELECT pipeline FROM SALES WHERE salesRep!='NULL'
+What tables are in the database^SHOW TABLES
+Show me leads by status for unconverted leads?^SELECT leads FROM SALES WHERE status=0
+Show open opportunities by forecast category^SELECT opportunities FROM SALES WHERE forecast=1
+find all customer data^SELECT customer FROM CUSTOMER
+obtain all employee info^SELECT employee, user, department FROM EMPLOYEE
+Store city and company for me^CREATE [TABLE:MYENTRY], [COLUMN1:city:string], [COLUMN2:company:string], [DEFAULT:NULL]
+retrieve all customer data^SELECT customer FROM CUSTOMER
+obtain all employee info^SELECT employee, user, department FROM EMPLOYEE
+get all customer data^SELECT customer FROM CUSTOMER
+Store city and company for me^CREATE [TABLE:MYENTRY], [COLUMN1:city:string], [COLUMN2:company:string], [DEFAULT:NULL]
+download all customer data^SELECT customer FROM CUSTOMER
+display all employee info^SELECT * FROM EMPLOYEE
+select all customer data^SELECT customer FROM CUSTOMER
+show all employee info^SELECT employee FROM EMPLOYEE
